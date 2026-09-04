@@ -9,3 +9,4 @@ prisma/dev.db-journal
 uploads
 .DS_Store
 *.log
+*.tsbuildinfo

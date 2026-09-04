@@ -16,6 +16,7 @@
   "dependencies": {
     "@hello-pangea/dnd": "^16.6.0",
     "@prisma/client": "^5.15.0",
+    "@vercel/blob": "^2.8.0",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "iron-session": "^8.0.4",

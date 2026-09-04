@@ -1,17 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
+import { put } from "@vercel/blob";
 import { getSession } from "@/lib/auth";
 import { randomUUID } from "crypto";
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
 
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+
+// Only these types are allowed so a stored thumbnail can never be an SVG
+// (which could carry embedded scripts) or any other executable-ish content.
+const ALLOWED_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+  "image/avif",
+]);
 
 const EXT_MAP: Record<string, string> = {
   "image/jpeg": ".jpg",
   "image/png": ".png",
   "image/webp": ".webp",
   "image/gif": ".gif",
-  "image/svg+xml": ".svg",
   "image/avif": ".avif",
 };
 
@@ -28,23 +36,25 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "No file provided" }, { status: 400 });
   }
 
-  if (!file.type.startsWith("image/")) {
-    return NextResponse.json({ error: "File must be an image" }, { status: 400 });
+  if (!ALLOWED_TYPES.has(file.type)) {
+    return NextResponse.json({ error: "File must be a JPG, PNG, WebP, GIF, or AVIF image" }, { status: 400 });
   }
 
   if (file.size > MAX_SIZE) {
     return NextResponse.json({ error: "File too large (max 5MB)" }, { status: 400 });
   }
 
-  const ext =
-    EXT_MAP[file.type] ?? path.extname(file.name) ?? ".png";
-  const filename = `${randomUUID()}${ext}`;
-  const uploadsDir = path.join(process.cwd(), "public", "uploads");
-
-  await mkdir(uploadsDir, { recursive: true });
+  const ext = EXT_MAP[file.type] ?? ".png";
+  const filename = `thumbnails/${randomUUID()}${ext}`;
 
   const buffer = Buffer.from(await file.arrayBuffer());
-  await writeFile(path.join(uploadsDir, filename), buffer);
 
-  return NextResponse.json({ url: `/uploads/${filename}` });
+  // Blob returns a permanent public URL that we store on the project. Requires
+  // BLOB_READ_WRITE_TOKEN (auto-injected on Vercel; a store token for local dev).
+  const blob = await put(filename, buffer, {
+    access: "public",
+    contentType: file.type,
+  });
+
+  return NextResponse.json({ url: blob.url });
 }

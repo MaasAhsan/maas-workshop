@@ -8,14 +8,14 @@ Single-page scroll portfolio + project workshop for **Makarim Ahsan**.
 
 ## Stack
 
-Next.js (App Router) + Tailwind CSS + Prisma (SQLite, Postgres-ready) + iron-session (owner-only OTP auth).
+Next.js (App Router) + Tailwind CSS + Prisma (Postgres) + iron-session (owner-only OTP auth).
 
 ## Getting started
 
 ```bash
 npm install
-cp .env.example .env.local   # then fill in values
-npx prisma db push           # create SQLite db + tables
+cp .env.example .env.local   # then fill in a Postgres URL (e.g. a free Neon DB — dev and prod share the schema)
+npx prisma db push           # create tables
 npm run dev                  # http://localhost:3000
 ```
 
@@ -23,12 +23,13 @@ Required env (see `.env.example`):
 
 | Var | Purpose |
 | --- | --- |
-| `DATABASE_URL` | `file:./dev.db` (SQLite) |
+| `DATABASE_URL` | Postgres connection string (Prisma). Dev: `file:./dev.db` (SQLite); prod: Neon/Postgres |
 | `SESSION_PASSWORD` | 32+ char random string for iron-session |
 | `OWNER_EMAIL` | the single email allowed to log in (default `makarimsusanto19@gmail.com`) |
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASS` | Gmail/other SMTP for sending OTP. Leave blank in dev — OTP prints to console |
 | `EMAIL_FROM` | sender shown in the OTP email |
 | `NEXT_PUBLIC_SITE_URL` | used for OG/absolute links |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob token for thumbnail uploads (auto-injected on Vercel; store token for local dev) |
 
 ## OTP login
 
@@ -50,11 +51,25 @@ Projects store **metadata + a link only** — no self-hosted binaries.
 
 ## Deploy (Vercel)
 
+The app is production-ready for Vercel's serverless platform: the DB is Postgres
+(via Prisma) and thumbnails upload to Vercel Blob — no writable filesystem needed.
+
 ```bash
-npm run build && npm run start
+npm run build && npm run start   # local production check
 ```
 
-On Vercel, switch `DATABASE_URL` to Postgres later (same Prisma schema). Set all env vars in the dashboard.
+On Vercel, set all env vars in the dashboard (or `vercel env add`):
+
+- `DATABASE_URL` — a Postgres connection string (e.g. free Neon). After setting
+  it, push the schema once: `npx prisma db push`.
+- `SESSION_PASSWORD` — a fresh 32+ char random string (must differ from local dev).
+- `SMTP_USER` / `SMTP_PASS` (Gmail App Password) for OTP email.
+- `NEXT_PUBLIC_SITE_URL` — the deployed origin, e.g. `https://maasworkshop.net`.
+- `BLOB_READ_WRITE_TOKEN` — auto-injected by Vercel when Blob is enabled.
+
+Deploy: connect the GitHub repo in the Vercel dashboard, or `vercel --prod` from
+the CLI. Attach your custom domain under **Settings → Domains** (Vercel provides
+automatic DNS/SSL for `*.vercel.app` and your own domain).
 
 ## Scripts
 

@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id            String   @id @default(cuid())
+  title         String
+  description   String
+  shortDesc     String?
+  thumbnail     String?
+  version       String   @default("1.0.0")
+  tags          String   @default("[]") // JSON array string for SQLite
+  downloadUrl   String
+  repoUrl       String?
+  featured      Boolean  @default(false)
+  downloadCount Int      @default(0)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model OtpCode {
+  id        String   @id @default(cuid())
+  email     String
+  code      String
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([email, createdAt])
+}
+
+model RateLimitEntry {
+  id        String   @id @default(cuid())
+  key       String
+  createdAt DateTime @default(now())
+
+  @@index([key, createdAt])
+}

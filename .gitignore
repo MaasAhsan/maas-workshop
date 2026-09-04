@@ -10,3 +10,6 @@ uploads
 .DS_Store
 *.log
 *.tsbuildinfo
+
+.vercel
+.env*

@@ -19,7 +19,7 @@ export function Contact() {
             <span className="text-text group-hover:text-white">makarimsusanto19@gmail.com</span>
           </a>
           <a
-            href="https://github.com/makarimsuso"
+            href="https://github.com/MaasAhsan"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-6 py-4 rounded-xl border border-border bg-surface hover:bg-surface-hover transition-colors group"

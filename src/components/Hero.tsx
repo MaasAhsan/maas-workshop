@@ -44,7 +44,7 @@ export function Hero() {
             <Rocket size={18} /> View Projects
           </Button>
         </Link>
-        <a href="https://github.com/makarimsuso" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/MaasAhsan" target="_blank" rel="noopener noreferrer">
           <Button size="lg" variant="secondary">
             <Github size={18} /> GitHub
           </Button>

@@ -5,10 +5,10 @@ import { ToastProvider } from "@/components/ui/Toast";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://maasworkshop.net"),
   title: "MAAS Workshop — Makarim Ahsan",
-  description: "A teenager who likes vibecoding and doing AI stuff.",
+  description: "I build working tools with AI, fast. Everything I make lives here, ready to download.",
   openGraph: {
     title: "MAAS Workshop — Makarim Ahsan",
-    description: "A teenager who likes vibecoding and doing AI stuff.",
+    description: "I build working tools with AI, fast. Everything I make lives here, ready to download.",
     type: "website",
     siteName: "MAAS Workshop",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "MAAS Workshop" }],
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "MAAS Workshop — Makarim Ahsan",
-    description: "A teenager who likes vibecoding and doing AI stuff.",
+    description: "I build working tools with AI, fast. Everything I make lives here, ready to download.",
   },
 };
 

@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 
 const RAMP = " .:-=+*#%@";
 // Opacity per brightness level (higher = more visible).
-const ALPHAS = [0.16, 0.26, 0.38, 0.52];
+const ALPHAS = [0.10, 0.16, 0.23, 0.31];
 const COLORS = ALPHAS.map((a) => `rgba(129,140,248,${a})`);
 const SKIP = 255;
 

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Download, FolderGit2, Github } from "lucide-react";
+import { useState } from "react";
+import Link from "next/link";
+import { ArrowRight, Download, FolderGit2, Github } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "./ui/Badge";
 import { Card } from "./ui/Card";
@@ -100,85 +101,36 @@ function ProjectCard({ project, index }: { project: FeaturedProject; index: numb
   );
 }
 
-export function ProjectsSection() {
-  const [projects, setProjects] = useState<FeaturedProject[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const res = await fetch("/api/projects?featured=true");
-        if (!res.ok) throw new Error("Failed to fetch projects");
-        const data = await res.json();
-        setProjects(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchProjects();
-  }, []);
-
-  if (loading) {
-    return (
-      <section id="projects" className="py-20 md:py-32 px-6 max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3].map((i) => (
-            <Reveal key={i} delay={100 + i * 100}>
-              <Card className="flex flex-col h-full animate-pulse">
-                <div className="relative w-full aspect-video rounded-lg overflow-hidden mb-5 bg-surface border border-border" />
-                <div className="h-4 bg-surface w-3/4 rounded mb-2" />
-                <div className="h-3 bg-surface w-full rounded mb-2" />
-                <div className="h-3 bg-surface w-2/3 rounded mb-5" />
-                <div className="mt-auto pt-5 border-t border-border/50 h-10" />
-              </Card>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section id="projects" className="py-20 md:py-32 px-6 max-w-6xl mx-auto">
-        <Reveal>
-          <Card className="py-14 text-center">
-            <FolderGit2 size={28} className="text-destructive mx-auto mb-3" />
-            <p className="text-muted">Failed to load projects: {error}</p>
-          </Card>
-        </Reveal>
-      </section>
-    );
-  }
-
-  const featuredProjects = projects.filter((p) => p.featured);
-
+export function ProjectsSection({ projects }: { projects: FeaturedProject[] }) {
   return (
-    <section id="projects" className="py-20 md:py-32 px-6 max-w-6xl mx-auto">
+    <section id="projects" className="py-16 md:py-24 px-6 max-w-6xl mx-auto">
       <Reveal>
-        <div className="mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Projects</h2>
-          <p className="text-muted">Featured projects from the workshop</p>
+        <div className="mb-10 flex items-end justify-between gap-4">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Latest from the workshop</h2>
+            <p className="text-muted">Grab a build, read the source, make it yours.</p>
+          </div>
+          <Link href="/workshop" className="hidden sm:inline-flex items-center gap-1.5 text-sm text-accent hover:underline shrink-0">
+            All projects <ArrowRight size={14} />
+          </Link>
         </div>
       </Reveal>
 
-      {featuredProjects.length === 0 ? (
-        <Reveal delay={100}>
-          <Card className="py-14 text-center">
-            <FolderGit2 size={28} className="text-accent mx-auto mb-3" />
-            <p className="text-muted">No featured projects yet</p>
-          </Card>
-        </Reveal>
+      {projects.length === 0 ? (
+        <Card className="py-14 text-center">
+          <FolderGit2 size={28} className="text-accent mx-auto mb-3" />
+          <p className="text-muted">New builds are on the way.</p>
+        </Card>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredProjects.map((project, i) => (
+          {projects.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />
           ))}
         </div>
       )}
+      <Link href="/workshop" className="sm:hidden mt-6 inline-flex items-center gap-1.5 text-sm text-accent hover:underline">
+        All projects <ArrowRight size={14} />
+      </Link>
     </section>
   );
 }

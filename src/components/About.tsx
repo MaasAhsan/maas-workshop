@@ -1,7 +1,5 @@
 import { Reveal } from "./Reveal";
 
-const skills = ["Vibecoding", "AI & LLMs", "Web Dev", "Next.js", "Python", "Automation", "Prototyping", "Learning fast"];
-
 export function About() {
   return (
     <section id="about" className="py-20 md:py-32 px-6 max-w-6xl mx-auto">
@@ -10,7 +8,7 @@ export function About() {
         <div className="w-16 h-1 bg-accent rounded-full mb-10" />
       </Reveal>
 
-      <div className="grid md:grid-cols-2 gap-12 md:gap-16">
+      <div className="max-w-2xl">
         <Reveal delay={100}>
           <p className="text-muted leading-relaxed text-lg">
             I&apos;m Makarim, a teenager who spends way too much time vibecoding — building things fast,
@@ -23,15 +21,6 @@ export function About() {
           </p>
         </Reveal>
 
-        <Reveal delay={200}>
-          <div className="flex flex-wrap gap-2.5">
-            {skills.map((s) => (
-              <span key={s} className="px-4 py-2 rounded-full text-sm bg-surface border border-border text-text hover:border-accent/40 hover:text-white transition-colors cursor-default">
-                {s}
-              </span>
-            ))}
-          </div>
-        </Reveal>
       </div>
     </section>
   );

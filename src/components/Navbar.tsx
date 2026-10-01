@@ -69,14 +69,8 @@ export function Navbar() {
               </Link>
               <Button size="sm" variant="ghost" onClick={handleLogout}>Logout</Button>
             </>
-          ) : (
-            <Link
-              href="/workshop/admin"
-              className="text-sm text-muted hover:text-text transition-colors"
-            >
-              Owner login
-            </Link>
-          )}
+          
+          ) : null}
         </div>
 
         {/* Mobile toggle */}
@@ -122,15 +116,8 @@ export function Navbar() {
                 </Link>
                 <Button size="sm" variant="ghost" onClick={handleLogout}>Logout</Button>
               </div>
-            ) : (
-              <Link
-                href="/workshop/admin"
-                onClick={() => setMobileOpen(false)}
-                className="text-sm text-muted hover:text-text"
-              >
-                Owner login
-              </Link>
-            )}
+            
+            ) : null}
           </div>
         </div>
       )}

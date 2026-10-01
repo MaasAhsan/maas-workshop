@@ -11,7 +11,7 @@ export function Hero() {
   const [pfpError, setPfpError] = useState(false);
 
   return (
-    <section id="hero" className="relative min-h-[calc(100vh-3.5rem)] flex flex-col items-center justify-center px-6 text-center">
+    <section id="hero" className="relative min-h-[70vh] py-16 flex flex-col items-center justify-center px-6 text-center">
       <div className="mb-8">
         <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden bg-gradient-to-br from-accent to-violet-700 flex items-center justify-center text-4xl md:text-5xl font-bold text-white shadow-xl shadow-accent/20 ring-4 ring-accent/10 mx-auto">
           {!pfpError ? (
@@ -34,8 +34,7 @@ export function Hero() {
       </h1>
 
       <p className="mt-6 max-w-xl text-lg md:text-xl text-muted">
-        A teenager who likes <span className="text-text font-medium">vibecoding</span> and doing{" "}
-        <span className="text-text font-medium">AI stuff</span>.
+        I build <span className="text-text font-medium">working tools with AI</span>, fast. Everything I make lives here, ready to download.
       </p>
 
       <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -51,7 +50,7 @@ export function Hero() {
         </a>
       </div>
 
-      <a href="#about" className="absolute bottom-8 text-muted hover:text-text transition-colors animate-bounce" aria-label="Scroll down">
+      <a href="#projects" className="absolute bottom-8 text-muted hover:text-text transition-colors animate-bounce" aria-label="Scroll down">
         <ChevronDown size={24} />
       </a>
     </section>

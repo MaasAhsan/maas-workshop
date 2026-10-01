@@ -5,6 +5,8 @@ import { ProjectCard } from "@/components/ProjectCard";
 import { Reveal } from "@/components/Reveal";
 import { Card } from "@/components/ui/Card";
 import { FolderGit2 } from "lucide-react";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 
 export interface Project {
   id: string;
@@ -22,6 +24,16 @@ export interface Project {
 }
 
 export default function WorkshopPage() {
+  return (
+    <>
+      <Navbar />
+      <WorkshopContent />
+      <Footer />
+    </>
+  );
+}
+
+function WorkshopContent() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

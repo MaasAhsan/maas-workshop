@@ -4,6 +4,7 @@ import { About } from "@/components/About";
 import { ProjectsSection, type FeaturedProject } from "@/components/ProjectsSection";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { AsciiBackground } from "@/components/AsciiBackground";
 import { Reveal } from "@/components/Reveal";
 import { prisma } from "@/lib/prisma";
 
@@ -33,6 +34,7 @@ export default async function HomePage() {
   const projects = await getHomeProjects();
   return (
     <>
+      <AsciiBackground />
       <Navbar />
       <main className="flex flex-col">
         <Reveal>
